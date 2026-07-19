@@ -1,65 +1,83 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useState, useRef } from "react";
+import { useChapterUnlock } from "@/lib/useChapterUnlock";
+import { CountdownTimer } from "@/components/CountdownTimer";
+import { JourneyAnimation } from "@/components/JourneyAnimation";
+import { StarsBackground } from "../components/StarsBackground";
+import { Day1Birthday } from "../components/Day1Birthday";
+import { Day9Confession } from "../components/Day9Confession";
+import { StoryBook } from "@/components/StoryBook";
+
+const TOTAL_DAYS = 9;
 
 export default function Home() {
+  const { unlocked, msUntilNext, nextChapter } = useChapterUnlock();
+  const [viewIndex, setViewIndex] = useState(0);
+  const prevUnlockedLength = useRef(0);
+
+  useEffect(() => {
+    // Only update if new chapters were added
+    if (unlocked.length > prevUnlockedLength.current && unlocked.length > 0) {
+      setViewIndex(unlocked.length - 1);
+    }
+    prevUnlockedLength.current = unlocked.length;
+  }, [unlocked.length]);
+
+  const current = unlocked[viewIndex] ?? null;
+  const isSpecialDay = current?.day === 1 || current?.day === 9;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="relative min-h-screen bg-gradient-to-b from-[#1a0f2e] via-[#2d1b4e] to-[#1a0f2e] flex flex-col items-center justify-center overflow-hidden px-4">
+      <StarsBackground />
+
+      {current ? (
+        <>
+          {current.day === 1 && (
+            <Day1Birthday onAccept={() => setViewIndex(0)} />
+          )}
+          {current.day === 9 && <Day9Confession totalDays={TOTAL_DAYS} />}
+          {!isSpecialDay && <StoryBook chapter={current} />}
+
+          {current.day !== 9 && (
+            <div className="mt-8">
+              <JourneyAnimation day={current.day} totalDays={TOTAL_DAYS} />
+            </div>
+          )}
+
+          {unlocked.length > 1 && (
+            <div className="flex items-center gap-6 mt-6 text-rose-200/80 z-10">
+              <button
+                disabled={viewIndex === 0}
+                onClick={() => setViewIndex(Math.max(0, viewIndex - 1))}
+                className="disabled:opacity-20 hover:text-white transition"
+              >
+                ← Previous
+              </button>
+              <span className="text-xs tracking-widest">
+                Day {current.day} · {viewIndex + 1} / {unlocked.length}
+              </span>
+              <button
+                disabled={viewIndex === unlocked.length - 1}
+                onClick={() =>
+                  setViewIndex(Math.min(unlocked.length - 1, viewIndex + 1))
+                }
+                className="disabled:opacity-20 hover:text-white transition"
+              >
+                Next →
+              </button>
+            </div>
+          )}
+        </>
+      ) : (
+        <p className="text-rose-100">Your story hasn&apos;t begun yet...</p>
+      )}
+
+      {nextChapter && msUntilNext && msUntilNext > 0 && (
+        <div className="mt-10 flex flex-col items-center gap-3 z-10">
+          <p className="text-rose-200/70 text-sm">Next chapter unlocks in</p>
+          <CountdownTimer ms={msUntilNext} />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      )}
+    </main>
   );
 }
