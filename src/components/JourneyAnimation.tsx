@@ -2,12 +2,63 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, Transition } from "framer-motion";
 
+// real-world height ratio, so the girl figure isn't drawn the same size as the boy
+const BOY_HEIGHT_FT = 5.9;
+const GIRL_HEIGHT_FT = 4.8;
+const HEIGHT_RATIO = GIRL_HEIGHT_FT / BOY_HEIGHT_FT; // ≈ 0.81
+
+const BOY_SCALE = 2;
+const GIRL_SCALE = BOY_SCALE * HEIGHT_RATIO;
+
 interface FigureProps {
   variant: "boy" | "girl";
   pose?: "stand" | "kneel";
   isWalking?: boolean;
   facing?: 1 | -1;
   scale?: number;
+}
+
+function Flower({
+  x = 0,
+  y = 0,
+  size = 1,
+}: {
+  x?: number;
+  y?: number;
+  size?: number;
+}) {
+  const petal = "#ffb3c6";
+  const center = "#ffd76b";
+  const stem = "#4a7a4a";
+
+  return (
+    <g transform={`translate(${x}, ${y}) scale(${size})`}>
+      {/* stem */}
+      <path
+        d="M 0 0 Q -2 8 0 16"
+        stroke={stem}
+        strokeWidth="1.5"
+        fill="none"
+        strokeLinecap="round"
+      />
+      {/* leaf */}
+      <path d="M 0 8 Q 6 6 8 10 Q 3 12 0 8 Z" fill={stem} />
+      {/* petals */}
+      {[0, 72, 144, 216, 288].map((deg) => (
+        <ellipse
+          key={deg}
+          cx="0"
+          cy="-5"
+          rx="3.2"
+          ry="5"
+          fill={petal}
+          transform={`rotate(${deg})`}
+        />
+      ))}
+      {/* center */}
+      <circle r="2.6" fill={center} />
+    </g>
+  );
 }
 
 function Leg({
@@ -60,8 +111,10 @@ export function Figure({
   pose = "stand",
   isWalking = false,
   facing = 1,
-  scale = 2,
+  scale,
 }: FigureProps) {
+  const resolvedScale = scale ?? (variant === "boy" ? BOY_SCALE : GIRL_SCALE);
+
   const skin = "#f2c9a0";
   const boyShirt = "#5b8dd6";
   const boyPants = "#33415c";
@@ -84,7 +137,7 @@ export function Figure({
 
   if (pose === "kneel") {
     return (
-      <g transform={`scale(${scale})`}>
+      <g transform={`scale(${resolvedScale})`}>
         <rect x="-9" y="16" width="8" height="12" rx="3" fill={boyPants} />
         <path
           d="M 0 16 L 9 16 L 13 26 L 20 26"
@@ -97,21 +150,20 @@ export function Figure({
         <rect x="-15" y="0" width="7" height="16" rx="3.5" fill={skin} />
         <motion.g
           initial={{ rotate: 0 }}
-          animate={{ rotate: -40 }}
+          animate={{ rotate: -30 }}
           transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
           style={{ originX: "8px", originY: "-4px" }}
         >
-          <rect x="6" y="-6" width="18" height="7" rx="3.5" fill={skin} />
+          <rect x="6" y="-6" width="16" height="7" rx="3.5" fill={skin} />
         </motion.g>
-        <motion.circle
+        <motion.g
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.3, duration: 0.6, ease: "backOut" }}
-          cx="27"
-          cy="-8"
-          r="4.5"
-          fill="#ffd76b"
-        />
+          style={{ originX: "24px", originY: "-8px" }}
+        >
+          <Flower x={24} y={-8} size={1.1} />
+        </motion.g>
         <circle cy="-20" r="10" fill={skin} />
         <path
           d="M -10 -24 Q 0 -36 10 -24 Q 10 -28 0 -30 Q -10 -28 -10 -24 Z"
@@ -128,8 +180,9 @@ export function Figure({
         ...bobTransition,
         scaleX: { duration: 0.4, ease: "easeInOut" },
       }}
-      style={{ scale }}
+      style={{ scale: resolvedScale }}
     >
+      {/* back arm */}
       <motion.g
         animate={{ rotate: armB }}
         transition={armTransition}
@@ -138,27 +191,33 @@ export function Figure({
         <rect x="-14" y="-2" width="7" height="20" rx="3.5" fill={skin} />
       </motion.g>
 
+      {/* back leg */}
       <g transform="translate(-3, 0)">
         <Leg side="back" isWalking={isWalking} color={legColor} />
       </g>
+      {/* front leg */}
       <g transform="translate(3, 0)">
         <Leg side="front" isWalking={isWalking} color={legColor} />
       </g>
 
+      {/* torso / clothes */}
       {variant === "boy" ? (
         <rect x="-10" y="-4" width="20" height="26" rx="6" fill={boyShirt} />
       ) : (
         <path d="M -11 -4 L 11 -4 L 16 22 L -16 22 Z" fill={girlDress} />
       )}
 
+      {/* front arm, holding a flower if this is the boy */}
       <motion.g
         animate={{ rotate: armA }}
         transition={armTransition}
         style={{ originX: "8px", originY: "-2px" }}
       >
         <rect x="7" y="-2" width="7" height="20" rx="3.5" fill={skin} />
+        {variant === "boy" && <Flower x={10.5} y={18} size={0.9} />}
       </motion.g>
 
+      {/* head */}
       <circle cy="-18" r="10" fill={skin} />
 
       {variant === "boy" ? (
@@ -194,7 +253,7 @@ export function Figure({
 
 export function journeyBoyX(day: number, totalDays: number) {
   const progress = Math.min((day - 1) / (totalDays - 1), 1);
-  return 80 + progress * 460;
+  return 80 + progress * 400;
 }
 
 export function JourneyAnimation({
@@ -205,7 +264,7 @@ export function JourneyAnimation({
   totalDays?: number;
 }) {
   const boyX = journeyBoyX(day, totalDays);
-  const girlX = 590;
+  const girlX = 610;
 
   const prevDayRef = useRef(day);
   const [facing, setFacing] = useState<1 | -1>(1);
