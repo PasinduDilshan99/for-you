@@ -27,7 +27,7 @@ export default function Home() {
   const isSpecialDay = current?.day === 1 || current?.day === 9;
 
   return (
-    <main className="relative min-h-screen bg-gradient-to-b from-[#1a0f2e] via-[#2d1b4e] to-[#1a0f2e] flex flex-col items-center justify-center overflow-hidden px-4">
+    <main className="relative min-h-screen bg-gradient-to-b from-[#1a0f2e] via-[#2d1b4e] to-[#1a0f2e] flex flex-col items-center justify-center overflow-hidden px-4 py-12">
       <StarsBackground />
 
       {current ? (

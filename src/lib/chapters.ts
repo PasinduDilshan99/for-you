@@ -36,7 +36,7 @@ export const chapters: Chapter[] = [
       "Maybe this is not the biggest gift in the world, but every small detail here was created with care. I wanted you to have a memory that feels a little different from an ordinary birthday message.",
 
       "Some people deserve more than just a few words. They deserve moments, smiles, and something created especially for them.",
-      "Maybe nobody has created something like this for you before, but I wanted to make this moment unique in my own way. Not because it is a big thing, but because you deserve something special.",
+      "Maybe nobody has created something like this for anyone before, but I wanted to make this moment unique in my own way. Not because it is a big thing, but because you deserve something special.",
 
       "That's all for today. This story still has more pages waiting. I'll see you again tomorrow after 8:00 PM. 😊",
     ],
@@ -85,7 +85,7 @@ export const chapters: Chapter[] = [
 
       "Sometimes, the most valuable memories are not the big events. They are simple moments that happen naturally, but somehow remain in our hearts for a long time.",
 
-      "I still remember the first time we met at the 5th Restaurant. It was just a normal day, but that day became the beginning of many little memories. Walking with you on the road at night, seeing the university night view, and talking about the night sky are moments I still remember.",
+      "I still remember the first time we met at the Cafe Of The 5th. It was just a normal day, but that day became the beginning of many little memories. Walking with you on the road at night, seeing the university night view, and talking about the night sky are moments I still remember.",
 
       "Sometimes, when you are busy doing something, I quietly look at you without you noticing. Your eyes are really beautiful. I know you can feel when someone is looking at you, but that small moment is something I cannot explain with words.",
 
@@ -139,8 +139,6 @@ export const chapters: Chapter[] = [
 
       "Sometimes, the best memories are not created during big events. They come from simple moments that happen naturally and quietly become special.",
 
-      "I still remember the nights when we walked together, the university night view, and the conversations we had while looking at the sky. They were simple moments, but somehow they stayed in my mind.",
-
       "There was something peaceful about those moments. Just walking, talking, sharing thoughts, and enjoying the atmosphere without needing anything more.",
 
       "Sometimes I think the beauty of a memory is not only about where we were or what we did. It is about who was there with us at that moment.",
@@ -161,23 +159,29 @@ export const chapters: Chapter[] = [
     content: [
       "Welcome back. 😊",
 
-      "Today, I want to share something that I have slowly realized over time.",
+      "Today, I want to share something that I slowly realized over time.",
 
-      "In life, we meet many people. We talk with many people, create many memories, and share many moments. But sometimes, without even noticing, one person starts becoming different from everyone else.",
+      "In life, we meet many people. We talk with many people and create many memories. But sometimes, without even noticing, one person starts becoming different from everyone else.",
 
       "For me, you became someone like that.",
 
-      "I like the way we can talk about simple things, laugh about random things, and enjoy small moments without needing anything special to happen.",
+      "I like the way we can talk about simple things, laugh about random things, and enjoy small moments without needing a special reason.",
 
       "There is a comfort in being around you. Even ordinary moments feel a little different when I share them with you.",
 
-      "I don't know if you notice these things, but the small conversations, the smiles, and the time we spend together are moments that I truly value.",
+      "I know I am not a perfect person. I have my own mistakes, weaknesses, and things I need to improve.",
 
-      "Some people bring happiness through big actions, but some people make life better simply by being themselves.",
+      "But one thing I truly appreciate about you is that you always try to help me become better. Your advice, your thoughts, and the way you encourage me have helped me see things differently.",
 
-      "You are someone who has that kind of presence.",
+      "Sometimes, a person becomes special not only because of the happiness they bring, but also because they inspire us to grow and become a better version of ourselves.",
 
-      "Thank you for being a beautiful part of my memories. There are still a few more pages waiting, so I'll see you again tomorrow after 8:00 PM. 🌙",
+      "You have that kind of presence in my life. You make me want to improve, learn, and become better than who I was before.",
+
+      "I don't know if you realize it, but the small conversations, the advice you give, and the time we spend together have meant a lot to me.",
+
+      "Thank you for being someone who brings happiness, kindness, and positive changes into my life.",
+
+      "There are still a few more pages waiting. I'll see you again tomorrow after 8:00 PM. 🌙",
     ],
   },
   {
@@ -209,7 +213,7 @@ export const chapters: Chapter[] = [
     unlockAt: "2026-05-04T20:00:00",
     title: "The Final Chapter",
     theme: "A Story I Wanted To Tell You",
-    poetry: "The moon is beautiful, isn't it?",
+    // poetry: "The moon is beautiful, isn't it?",
     content: [
       "Welcome to the final chapter. 🌙",
 

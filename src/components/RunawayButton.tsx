@@ -9,9 +9,9 @@ interface RunawayButtonProps {
 }
 
 const THRESHOLD = 90;
-const BUTTON_W = 120;
-const BUTTON_H = 48;
-const COOLDOWN_MS = 350; // prevents re-triggering mid-flight, keeps motion smooth
+const BUTTON_W = 128;
+const BUTTON_H = 52;
+const COOLDOWN_MS = 350;
 
 export function RunawayButton({
   label,
@@ -19,6 +19,7 @@ export function RunawayButton({
   containerRef,
 }: RunawayButtonProps) {
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+  const [dodgeTick, setDodgeTick] = useState(0);
   const btnRef = useRef<HTMLButtonElement>(null);
   const lastDodge = useRef(0);
 
@@ -37,26 +38,31 @@ export function RunawayButton({
       x: Math.random() * maxX,
       y: Math.random() * maxY,
     });
+    setDodgeTick((t) => t + 1);
     onEscape?.();
   }, [containerRef, onEscape]);
 
-  // Place it sensibly on mount instead of letting it flash at (0,0)
+  // Initial placement
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
     const rect = container.getBoundingClientRect();
     setPos({
-      x: Math.max(rect.width - BUTTON_W - 24, 0), // starts near the right side
+      x: Math.max(rect.width - BUTTON_W - 24, 0),
       y: Math.max(rect.height / 2 - BUTTON_H / 2, 0),
     });
   }, [containerRef]);
 
-  const handlePointerMove = useCallback(
-    (e: React.PointerEvent) => {
-      if (e.pointerType === "touch") return; // touch is handled by onPointerDown below
-      const container = containerRef.current;
+  // Attach pointer tracking directly to the container — NO overlay div,
+  // so nothing sits on top of the Yes button and blocks clicks.
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleMove = (e: PointerEvent) => {
+      if (e.pointerType === "touch") return;
       const btn = btnRef.current;
-      if (!container || !btn) return;
+      if (!btn) return;
 
       const containerRect = container.getBoundingClientRect();
       const btnRect = btn.getBoundingClientRect();
@@ -68,35 +74,61 @@ export function RunawayButton({
 
       const dist = Math.hypot(pointerX - btnCenterX, pointerY - btnCenterY);
       if (dist < THRESHOLD) dodge();
-    },
-    [containerRef, dodge],
-  );
+    };
+
+    container.addEventListener("pointermove", handleMove);
+    return () => container.removeEventListener("pointermove", handleMove);
+  }, [containerRef, dodge]);
+
+  const rotation = ((dodgeTick * 37) % 17) - 8;
 
   return (
-    <div
-      onPointerMove={handlePointerMove}
-      className="relative w-full h-full"
-      style={{ touchAction: "none" }}
+    <motion.button
+      ref={btnRef}
+      aria-label="No (this one likes to run away)"
+      initial={{ opacity: 0, scale: 0.6 }}
+      animate={
+        pos
+          ? { x: pos.x, y: pos.y, opacity: 1, scale: 1, rotate: rotation }
+          : { opacity: 0, scale: 0.6 }
+      }
+      whileHover={{ scale: 1.06 }}
+      whileTap={{ scale: 0.94 }}
+      transition={{
+        x: { type: "spring", stiffness: 260, damping: 22, mass: 0.8 },
+        y: { type: "spring", stiffness: 260, damping: 22, mass: 0.8 },
+        rotate: { type: "spring", stiffness: 200, damping: 14 },
+        opacity: { duration: 0.4 },
+        scale: { type: "spring", stiffness: 300, damping: 20 },
+      }}
+      onPointerDown={(e) => {
+        if (e.pointerType === "touch") {
+          e.preventDefault();
+          dodge();
+        }
+      }}
+      style={{
+        position: "absolute",
+        width: BUTTON_W,
+        height: BUTTON_H,
+        touchAction: "none",
+      }}
+      className="
+        group flex items-center justify-center gap-1.5
+        rounded-full font-medium text-[15px] tracking-wide
+        text-rose-100/90 select-none cursor-default
+        bg-white/[0.07] backdrop-blur-md
+        border border-white/[0.14]
+        shadow-[0_4px_20px_-4px_rgba(0,0,0,0.35)]
+        hover:bg-white/[0.12] hover:border-white/25
+        hover:shadow-[0_6px_24px_-4px_rgba(244,184,201,0.25)]
+        active:bg-white/[0.16]
+        transition-colors duration-300
+        focus-visible:outline focus-visible:outline-2
+        focus-visible:outline-rose-300 focus-visible:outline-offset-2
+      "
     >
-      <motion.button
-        ref={btnRef}
-        aria-label="No (this one likes to run away)"
-        animate={pos ? { x: pos.x, y: pos.y, opacity: 1 } : { opacity: 0 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.96 }}
-        transition={{ type: "spring", stiffness: 260, damping: 22, mass: 0.8 }}
-        onPointerDown={(e) => {
-          // Touch devices: dodge on tap instead of relying on hover proximity
-          if (e.pointerType === "touch") {
-            e.preventDefault();
-            dodge();
-          }
-        }}
-        style={{ position: "absolute", width: BUTTON_W, height: BUTTON_H }}
-        className="rounded-full bg-white/10 border border-white/20 text-rose-100 hover:bg-white/20 backdrop-blur-sm cursor-pointer select-none"
-      >
-        {label}
-      </motion.button>
-    </div>
+      <span aria-hidden>{label}</span>
+    </motion.button>
   );
 }
