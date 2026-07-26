@@ -8,21 +8,17 @@ export interface Chapter {
   cards?: string[]; // used only on day 3 ("the little things")
 }
 
-// Note: day 1 and day 9 have their own dedicated components
-// (Day1Birthday.tsx, Day9Confession.tsx) — these entries exist only
-// so the unlock logic knows their dates. Their `content`/`poetry` here
-// isn't rendered by the generic StoryBook.
 export const chapters: Chapter[] = [
   {
     day: 1,
-    unlockAt: "2026-05-27T00:00:00",
+    unlockAt: "2026-06-27T00:00:00",
     title: "A Special Day For A Special Person",
     theme: "Happy Birthday",
     content: [],
   },
   {
     day: 2,
-    unlockAt: "2026-05-28T20:00:00",
+    unlockAt: "2026-07-28T19:27:00",
     title: "The Beginning",
     theme: "Every Story Has a Beginning",
     poetry: "I'm glad you came.",
@@ -38,12 +34,12 @@ export const chapters: Chapter[] = [
       "Some people deserve more than just a few words. They deserve moments, smiles, and something created especially for them.",
       "Maybe nobody has created something like this for anyone before, but I wanted to make this moment unique in my own way. Not because it is a big thing, but because you deserve something special.",
 
-      "That's all for today. This story still has more pages waiting. I'll see you again tomorrow after 8:00 PM. 😊",
+      "That's all for today. This story still has more pages waiting. I'll see you again tomorrow after 07:27 PM. 😊",
     ],
   },
   {
     day: 3,
-    unlockAt: "2026-05-29T20:00:00",
+    unlockAt: "2026-07-29T19:27:00",
     title: "The Little Things I Notice",
     theme: "Things That Make You Special",
     poetry: "Have you eaten?",
@@ -76,7 +72,7 @@ export const chapters: Chapter[] = [
   },
   {
     day: 4,
-    unlockAt: "2026-05-30T20:00:00",
+    unlockAt: "2026-07-30T19:27:00",
     title: "Moments I Remember",
     theme: "Small Moments, Beautiful Memories",
     poetry: "Take care on your way home.",
@@ -102,7 +98,7 @@ export const chapters: Chapter[] = [
   },
   {
     day: 5,
-    unlockAt: "2026-05-31T20:00:00",
+    unlockAt: "2026-07-31T19:27:00",
     title: "Thank You For Being You",
     theme: "The Person You Are",
     poetry: "Sleep well.",
@@ -128,7 +124,7 @@ export const chapters: Chapter[] = [
   },
   {
     day: 6,
-    unlockAt: "2026-05-01T20:00:00",
+    unlockAt: "2026-08-01T19:27:00",
     title: "The Moments I Treasure",
     theme: "Simple Moments, Special Memories",
     poetry: "The night is quiet.",
@@ -152,7 +148,7 @@ export const chapters: Chapter[] = [
   },
   {
     day: 7,
-    unlockAt: "2026-05-02T20:00:00",
+    unlockAt: "2026-08-02T19:27:00",
     title: "Someone Special",
     theme: "A Place You Hold",
     poetry: "You feel like home.",
@@ -186,7 +182,7 @@ export const chapters: Chapter[] = [
   },
   {
     day: 8,
-    unlockAt: "2026-07-03T20:00:00",
+    unlockAt: "2026-08-03T19:27:00",
     title: "Words I Kept Inside",
     theme: "Some Feelings Need Time",
     poetry: "I don't mind waiting.",
@@ -210,10 +206,10 @@ export const chapters: Chapter[] = [
   },
   {
     day: 9,
-    unlockAt: "2026-05-04T20:00:00",
+    unlockAt: "2026-08-04T19:27:00",
     title: "The Final Chapter",
     theme: "A Story I Wanted To Tell You",
-    // poetry: "The moon is beautiful, isn't it?",
+    poetry: "The moon is beautiful, isn't it?",
     content: [
       "Welcome to the final chapter. 🌙",
 

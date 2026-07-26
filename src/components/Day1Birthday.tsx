@@ -165,7 +165,7 @@ export function Day1Birthday({ onAccept }: { onAccept?: () => void }) {
                 Instead of a single birthday message, I created a little journey
                 just for you. Think of it as a storybook where a new page
                 appears every evening after{" "}
-                <span className="text-rose-200 font-semibold">8:00 PM</span>.
+                <span className="text-rose-200 font-semibold">07:27 PM</span>.
               </motion.p>
 
               <motion.p
