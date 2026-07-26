@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "For You", // shows in the browser tab
+  description: "A little 9-day journey, just for you.",
+};
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
