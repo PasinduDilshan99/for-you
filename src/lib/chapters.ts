@@ -93,7 +93,7 @@ export const chapters: Chapter[] = [
 
       "There are many more little moments that I keep in my heart. I cannot fit all of them into one page, so I will share some more with you on the final chapter.",
 
-      "Thank you for being part of these memories. Take care of yourself, and I'll see you again tomorrow after 8:00 PM. 🌙",
+      "Thank you for being part of these memories. Take care of yourself, and I'll see you again tomorrow after 07:27 PM. 🌙",
     ],
   },
   {
@@ -119,7 +119,7 @@ export const chapters: Chapter[] = [
 
       "Today, I just wanted to say thank you for those moments. Thank you for being someone who makes ordinary days a little more beautiful.",
 
-      "Sleep well. 🌙 I'll see you again tomorrow after 8:00 PM.",
+      "Sleep well. 🌙 I'll see you again tomorrow after 07:27 PM.",
     ],
   },
   {
@@ -143,7 +143,7 @@ export const chapters: Chapter[] = [
 
       "Thank you for being part of those memories. Some moments are special simply because they happened with the right person.",
 
-      "Have a peaceful night. 🌙 I'll see you again tomorrow after 8:00 PM.",
+      "Have a peaceful night. 🌙 I'll see you again tomorrow after 07:27 PM.",
     ],
   },
   {
@@ -177,7 +177,7 @@ export const chapters: Chapter[] = [
 
       "Thank you for being someone who brings happiness, kindness, and positive changes into my life.",
 
-      "There are still a few more pages waiting. I'll see you again tomorrow after 8:00 PM. 🌙",
+      "There are still a few more pages waiting. I'll see you again tomorrow after 07:27 PM. 🌙",
     ],
   },
   {
@@ -201,7 +201,7 @@ export const chapters: Chapter[] = [
 
       "Thank you for being part of those moments. Thank you for all the simple memories that became special without either of us realizing it.",
 
-      "One more chapter is waiting tomorrow. Until then, enjoy your evening, take care of yourself, and I'll see you again after 8:00 PM. 🌙",
+      "One more chapter is waiting tomorrow. Until then, enjoy your evening, take care of yourself, and I'll see you again after 07:27 PM. 🌙",
     ],
   },
   {
