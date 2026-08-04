@@ -201,19 +201,19 @@ export const chapters: Chapter[] = [
 
       "Thank you for being part of those moments. Thank you for all the simple memories that became special without either of us realizing it.",
 
-      "One more chapter is waiting tomorrow. Until then, enjoy your evening, take care of yourself, and I'll see you again after 07:27 PM. 🌙",
+      "One more chapter is waiting day after tomorrow. Until then, enjoy your evening, take care of yourself, and I'll see you again after 07:27 PM. 🌙",
     ],
   },
   {
     day: 9,
-    unlockAt: "2026-08-04T19:27:00",
+    unlockAt: "2026-08-06T19:27:00",
     title: "The Final Chapter",
     theme: "A Story I Wanted To Tell You",
     poetry: "The moon is beautiful, isn't it?",
     content: [
       "Welcome to the final chapter. 🌙",
 
-      "If you have reached here, it means you walked through this little journey with me from the beginning. Thank you for giving your time to read every page.",
+      "If you have reached here, it means you walked through this little joursney with me from the beginning. Thank you for giving your time to read every page.",
 
       "Every chapter was created from things I noticed, moments I remembered, and feelings that slowly became important to me.",
 
